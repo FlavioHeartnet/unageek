@@ -38,7 +38,7 @@ export function Hero() {
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl leading-[0.9] tracking-wide text-foreground">
             PREÇOS ABAIXO DA
             <br />
-            <span className="text-primary">liga</span>
+            <span className="text-primary">LIGA</span>
           </h1>
 
           <p className="text-muted text-lg sm:text-xl max-w-xl leading-relaxed mx-auto lg:mx-0">
