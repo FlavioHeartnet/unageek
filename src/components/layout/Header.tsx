@@ -28,13 +28,17 @@ export function Header() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <Image
-            src="/logounageek.jpeg"
-            alt="UNAGEEK Store"
-            width={40}
-            height={40}
-            className="rounded-full group-hover:scale-105 transition-transform duration-300 dark:invert-0 invert"
-          />
+          {mounted ? (
+            <Image
+              src={theme === "dark" ? "/logounageekdark.png" : "/logounageek.jpeg"}
+              alt="UNAGEEK Store"
+              width={40}
+              height={40}
+              className="rounded-full group-hover:scale-105 transition-transform duration-300"
+            />
+          ) : (
+            <div className="w-[40px] h-[40px] rounded-full bg-border animate-pulse" />
+          )}
           <span className="font-display text-2xl tracking-wider text-foreground group-hover:text-primary transition-colors">
             UNAGEEK
           </span>
