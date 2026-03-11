@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <main className="flex flex-col">
       <Hero />
-      <CategoryShowcase />
       <FeaturedCards products={mockProducts} />
+      <CategoryShowcase />
     </main>
   );
 }
