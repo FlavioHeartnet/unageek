@@ -1,12 +1,15 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ShoppingCart, Menu, X, Sun, Moon } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, Sun, Moon, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useCart } from "@/lib/cart-context";
+import { useAuth } from "@/lib/auth-context";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 const navLinks = [
   { href: "/produtos?game=pokemon", label: "Pokémon" },
@@ -20,9 +23,10 @@ export function Header() {
   const [mounted, setMounted] = useState(false);
   const { totalItems } = useCart();
   const { theme, setTheme } = useTheme();
+  const { user, loading } = useAuth();
 
   useEffect(() => setMounted(true), []);
-
+  console.log(user);
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/90 backdrop-blur-md">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -81,6 +85,35 @@ export function Header() {
             <Search className="w-5 h-5" />
           </button>
 
+          {/* User Auth */}
+          {!loading && (
+            <div className="hidden md:flex items-center ml-2 border-l border-border pl-4">
+              {user ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-sans font-medium text-foreground truncate max-w-[120px]">
+                    {user.displayName || "Usuário"}
+                  </span>
+                  <button
+                    onClick={() => {
+                      if (auth) signOut(auth);
+                    }}
+                    className="text-xs font-semibold uppercase tracking-wider text-muted hover:text-primary transition-colors"
+                  >
+                    Sair
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 text-sm font-sans font-medium text-muted hover:text-foreground transition-colors"
+                >
+                  <User className="w-4 h-4" />
+                  <span>Entrar / Registrar</span>
+                </Link>
+              )}
+            </div>
+          )}
+
           <Link
             href="/checkout"
             className="p-2 text-muted hover:text-foreground transition-colors rounded-full hover:bg-surface-light relative"
@@ -125,6 +158,31 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
+
+              <div className="border-t border-border mt-2 pt-2 pb-1 px-2">
+                {!loading && user ? (
+                  <div className="flex flex-col gap-2 p-2">
+                    <span className="text-sm text-foreground">Olá, {user.displayName || "Usuário"}</span>
+                    <button
+                      onClick={() => {
+                        if (auth) signOut(auth);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-left py-2 font-sans text-sm font-semibold text-primary transition-colors"
+                    >
+                      SAIR DA CONTA
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block p-2 font-sans text-sm font-semibold text-foreground transition-colors"
+                  >
+                    ENTRAR OU REGISTRAR
+                  </Link>
+                )}
+              </div>
             </nav>
           </motion.div>
         )}

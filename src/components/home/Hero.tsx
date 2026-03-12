@@ -43,7 +43,7 @@ export function Hero() {
 
           <p className="text-muted text-lg sm:text-xl max-w-xl leading-relaxed mx-auto lg:mx-0">
             Pokémon TCG, Magic: The Gathering e Yu-Gi-Oh! — cartas avulsas selecionadas para colecionar e competir.
-            <br /><span className="text-bold">frete grátis acima de R$ 200,00</span>
+            <br /><span className="italic font-bold">*frete grátis acima de R$ 200,00</span>
           </p>
 
           <div className="flex flex-wrap items-center gap-4 mt-2 justify-center lg:justify-start">

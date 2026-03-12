@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/lib/cart-context";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { AuthProvider } from "@/lib/auth-context";
 
 const nowFont = localFont({
   src: [
@@ -62,11 +63,13 @@ export default function RootLayout({
         className={`${nowFont.variable} ${aileronFont.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider>
-          <CartProvider>
-            <Header />
-            <div className="flex-1 flex flex-col">{children}</div>
-            <Footer />
-          </CartProvider>
+          <AuthProvider>
+            <CartProvider>
+              <Header />
+              <div className="flex-1 flex flex-col">{children}</div>
+              <Footer />
+            </CartProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
